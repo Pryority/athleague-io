@@ -1,4 +1,5 @@
 let map;
+let course = document.getElementById('course');
 const bounds = {
     north: 44.733359,
     south: 43.751457,
@@ -9,7 +10,7 @@ const bounds = {
 function initMap() {
 
     // The location of Uluru
-    const toronto = { lat: 43.733359, lng: -79.367592 };
+    const toronto = { lat: 44.34, lng: -79.367592 };
     // The map, centered at Uluru
     map = new google.maps.Map(document.getElementById("map"), {
         center: toronto,
@@ -17,14 +18,20 @@ function initMap() {
             latLngBounds: bounds,
             strictBounds: false
         },
-        zoom: 8,
+        zoom: 8.5,
     });
-
 
     // Display the area between the location southWest and northEast.
     map.addListener("click", (e) => {
         placeMarkerAndPanTo(e.latLng, map);
     });
+
+    // map.addListener("click", course, (e) => {
+    //     // remove all courses from the view
+    //     // display all checkpoints of the selected course and
+    //     // center the map within the bounds of the course's checkpoints
+    // });
+
     // Add 5 markers to map at random locations.
     // For each of these markers, give them a title with their index, and when
     // they are clicked they should open an infowindow with text from a secret
@@ -78,7 +85,6 @@ function initMap() {
     console.log(checkpoints)
     console.log(checkpoints.length)
     for (let i = 0; i < checkpoints.length; ++i) {
-        console.log(checkpoints[i].latLng)
         console.log(checkpoints[i].type)
         const marker = new google.maps.Marker({
             position: {
@@ -88,7 +94,6 @@ function initMap() {
             icon: checkpoints[i].icon,
             map: map,
         });
-
         // attachSecretMessage(marker, checkpoints[i].kind);
     }
 
