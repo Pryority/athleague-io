@@ -1,21 +1,27 @@
+let map;
+const bounds = {
+    north: 44.733359,
+    south: 43.751457,
+    east: -77.367592,
+    west: -82,
+};
 // Initialize and add the map
 function initMap() {
+
     // The location of Uluru
-    const uluru = { lat: -25.344, lng: 131.036 };
+    const toronto = { lat: 43.733359, lng: -79.367592 };
     // The map, centered at Uluru
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 4,
-        center: { lat: -25.363882, lng: 131.044922 },
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: toronto,
+        restictions: {
+            latLngBounds: bounds,
+            strictBounds: false
+        },
+        zoom: 8,
     });
-    const bounds = {
-        north: -25.363882,
-        south: -31.203405,
-        east: 131.044922,
-        west: 125.244141,
-    };
+
 
     // Display the area between the location southWest and northEast.
-    map.fitBounds(bounds);
     map.addListener("click", (e) => {
         placeMarkerAndPanTo(e.latLng, map);
     });
@@ -38,12 +44,12 @@ function initMap() {
             },
             {
                 kind: "TACTICAL,",
-                type: "tactical,",
+                type: "tactical",
                 icon: "assets/images/cp-images/tactical.png",
             },
             {
                 kind: "ROGAIN,",
-                type: "rogain,",
+                type: "rogain",
                 icon: "assets/images/cp-images/rogain.png",
             },
             {
@@ -58,12 +64,12 @@ function initMap() {
             },
             {
                 kind: "LOCKED - TACTICAL,",
-                type: "lockedTactical,",
+                type: "lockedTactical",
                 icon: "assets/images/cp-images/locked-tactical.png",
             },
             {
                 kind: "LOCKED - ROGAIN,",
-                type: "lockedRogain,",
+                type: "lockedRogain",
                 icon: "assets/images/cp-images/locked-rogain.png",
             },
         ];
@@ -83,8 +89,9 @@ function initMap() {
             map: map,
         });
 
-        attachSecretMessage(marker, checkpoints[i].kind);
+        // attachSecretMessage(marker, checkpoints[i].kind);
     }
+
 }
 
 function placeMarkerAndPanTo(latLng, map) {
@@ -98,16 +105,16 @@ function placeMarkerAndPanTo(latLng, map) {
 
 // Attaches an info window to a marker with the provided message. When the
 // marker is clicked, the info window will open with the secret message.
-function attachSecretMessage(marker, secretMessage) {
-    const infowindow = new google.maps.InfoWindow({
-        content: secretMessage,
-    });
+// function attachSecretMessage(marker, secretMessage) {
+//     const infowindow = new google.maps.InfoWindow({
+//         content: secretMessage,
+//     });
 
-    marker.addListener("click", () => {
-        infowindow.open(marker.get("map"), marker);
-        map.setCenter(marker.getPosition());
-    });
-}
+//     marker.addListener("click", () => {
+//         infowindow.open(marker.get("map"), marker);
+//         map.setCenter(marker.getPosition());
+//     });
+// }
 // const course = [Checkpoint];
 
 // Display the area between the checkpoints.
